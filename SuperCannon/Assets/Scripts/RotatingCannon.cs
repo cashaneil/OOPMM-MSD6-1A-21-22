@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class RotatingCannon : MonoBehaviour
 {
+    Transform CannonTip; //variable of type transform to be able to attach the CannonTip game object's transform.position in it
     GameObject smallbullet;
     GameObject largebullet;
 
     // Start is called before the first frame update
     void Start()
     {
+        //get the transform of a child of the Cannon GameObject according to the index number provided
+        //childs in game objects have index numbers from 0 onwards
+        //CannonTip is the only child of Cannon so it is 0
+        CannonTip = this.gameObject.transform.GetChild(0);
+
         smallbullet = Resources.Load("SmallBullet") as GameObject;
         largebullet = Resources.Load("LargeBullet") as GameObject;
     }
@@ -34,14 +40,14 @@ public class RotatingCannon : MonoBehaviour
         //firing bullet
         if (Input.GetButtonDown("Fire1")) {
             //it is the connon's role to spawn the bullet, but once the bullet is spawned, it is the SmallBullet script's role to control it
-            GameObject mysmallbullet = Instantiate(smallbullet, this.transform.position, Quaternion.identity);
+            GameObject mysmallbullet = Instantiate(smallbullet, CannonTip.position, Quaternion.identity);
             //so setting the velocity should be moved to the SmallBullet script
             //mysmallbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 4f);
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            GameObject mylargebullet = Instantiate(largebullet, this.transform.position, Quaternion.identity);
+            GameObject mylargebullet = Instantiate(largebullet, CannonTip.position, Quaternion.identity);
         }
     }
 }

@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D mycollider)
     {
-        if(mycollider.gameObject.name == "Collider")
+        if(mycollider.gameObject.name == "Collider")  //if bullet collides with Game Object of name 'Collider', destroy it
         {
             Destroy(gameObject);
         }

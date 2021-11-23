@@ -17,26 +17,32 @@ public abstract class GameData : MonoBehaviour
 
     static private Vector3 mousepos = new Vector3();
 
+    static float score = 0;
+
     //specifying real world coordinate values corresponding to camera coordinates through methods
     
-    public static void GetXMin()
+    public static float GetXMin()
     {
         xMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x;
+        return xMin;
     }
 
-    public static void GetXMax()
+    public static float GetXMax()
     {
         xMax = gameCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x;
+        return xMax;
     }
     
-    public static void GetYMin()
+    public static float GetYMin()
     {
         yMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
+        return yMin;
     }
     
-    public static void GetYMax()
+    public static float GetYMax()
     {
         yMax = gameCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y;
+        return yMax;
     }
 
     //By switching from void to Vector3, method GetMouseTarget has become a sort of variable
@@ -45,5 +51,23 @@ public abstract class GameData : MonoBehaviour
         //convert the mouse  position on screen to game units (world points) and store it in Vector3 mousepos
         mousepos = gameCamera.ScreenToWorldPoint(Input.mousePosition);
         return mousepos;
+    }
+
+    public static void AddScorebyEnemy(string EnemyType)
+    {
+        if (EnemyType == "CircleEnemy(Clone)")
+        {
+            score += 2f;
+        }
+        else if (EnemyType == "DiamondEnemy(Clone)")
+        {
+            score += 5f;
+        }
+        else if (EnemyType == "Enemy(Clone)")
+        {
+            score += 10f;
+        }
+
+        Debug.Log("New score is: "+score);
     }
 }
