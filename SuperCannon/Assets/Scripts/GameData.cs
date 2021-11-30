@@ -11,63 +11,71 @@ using UnityEngine;
 //STATIC => VARIABLES/METHODS AT THE 'TYPE' LEVEL. - ONLY ONE
 public abstract class GameData : MonoBehaviour
 {
-    static float xMin, xMax, yMin, yMax;
-    
     static Camera gameCamera = Camera.main;
-
-    static private Vector3 mousepos = new Vector3();
-
-    static float score = 0;
+    static Vector3 mousepos = new Vector3();
+    
+    private static int _score = 0;
+    public static int Score
+    {
+        set { _score = value; }
+        get { return _score; }
+    }
 
     //specifying real world coordinate values corresponding to camera coordinates through methods
-    
-    public static float GetXMin()
+    public static float XMin
     {
-        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x;
-        return xMin;
+        get { return gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x;}
     }
 
-    public static float GetXMax()
+    public static float XMax
     {
-        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x;
-        return xMax;
+        get { return gameCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x; }
     }
+
+    public static float YMin
+    {
+        get { return gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y; }
+    }
+
+    public static float YMax
+    {
+        get { return gameCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y; }
+    }
+
+    public static Vector3 MousePos
+    {
+        get { return gameCamera.ScreenToWorldPoint(Input.mousePosition); }
+    }
+
+    //public static float GetXMin()
+    //{
+    //    xMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x;
+    //    return xMin;
+    //}
+
+    //public static float GetXMax()
+    //{
+    //    xMax = gameCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x;
+    //    return xMax;
+    //}
     
-    public static float GetYMin()
-    {
-        yMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
-        return yMin;
-    }
+    //public static float GetYMin()
+    //{
+    //    yMin = gameCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
+    //    return yMin;
+    //}
     
-    public static float GetYMax()
-    {
-        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y;
-        return yMax;
-    }
+    //public static float GetYMax()
+    //{
+    //    yMax = gameCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y;
+    //    return yMax;
+    //}
 
     //By switching from void to Vector3, method GetMouseTarget has become a sort of variable
-    public static Vector3 GetMouseTarget()
-    {
-        //convert the mouse  position on screen to game units (world points) and store it in Vector3 mousepos
-        mousepos = gameCamera.ScreenToWorldPoint(Input.mousePosition);
-        return mousepos;
-    }
-
-    public static void AddScorebyEnemy(string EnemyType)
-    {
-        if (EnemyType == "CircleEnemy(Clone)")
-        {
-            score += 2f;
-        }
-        else if (EnemyType == "DiamondEnemy(Clone)")
-        {
-            score += 5f;
-        }
-        else if (EnemyType == "Enemy(Clone)")
-        {
-            score += 10f;
-        }
-
-        Debug.Log("New score is: "+score);
-    }
+    //public static Vector3 GetMouseTarget()
+    //{
+    //    //convert the mouse  position on screen to game units (world points) and store it in Vector3 mousepos
+    //    mousepos = gameCamera.ScreenToWorldPoint(Input.mousePosition);
+    //    return mousepos;
+    //}
 }

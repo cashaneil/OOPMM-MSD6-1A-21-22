@@ -24,7 +24,7 @@ public class RotatingCannon : MonoBehaviour
     void Update()
     {
         //calculating mouse pos RELATIVE to the cannon pos (ie. the difference in dist between them) by substracting cannon pos by mouse pos
-        Vector3 mouselook = this.transform.position - GameData.GetMouseTarget();
+        Vector3 mouselook = this.transform.position - GameData.MousePos;
 
         //Since Unity is actually 3D based, if we want an object to rotate in 2D, it needs to rotate AROUND the Z axis, which in Unity is Vector3.forward
         //newrotation specifies new rotation coordinated for the cannon to be set to
