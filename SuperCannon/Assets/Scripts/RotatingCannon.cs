@@ -8,6 +8,8 @@ public class RotatingCannon : MonoBehaviour
     GameObject smallbullet;
     GameObject largebullet;
 
+    Coroutine myCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,15 +41,47 @@ public class RotatingCannon : MonoBehaviour
 
         //firing bullet
         if (Input.GetButtonDown("Fire1")) {
-            //it is the connon's role to spawn the bullet, but once the bullet is spawned, it is the SmallBullet script's role to control it
-            GameObject mysmallbullet = Instantiate(smallbullet, CannonTip.position, Quaternion.identity);
-            //so setting the velocity should be moved to the SmallBullet script
-            //mysmallbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 4f);
+            //Coroutine is an IEnumerator object
+            //A NEW IEnumerator object is generated EVERY TIME a coroutine is started
+            //With every button press, a NEW IEnumerator is stored in coroutineFire#
+            //if RepeatFire("") is stored once before if statements, the SAME IEnumerator is kept and
+            //StopCoroutine() will try to stop an OLD IEnumerator object
+            myCoroutine = StartCoroutine(RepeatFire("Fire1"));
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            GameObject mylargebullet = Instantiate(largebullet, CannonTip.position, Quaternion.identity);
+            myCoroutine = StartCoroutine(RepeatFire("Fire2"));
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(myCoroutine);
+        }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            StopCoroutine(myCoroutine);
+        }
+    }
+
+    IEnumerator RepeatFire(string button)
+    {
+        while (true)
+        {
+            if (button == "Fire1")
+            {
+                //it is the connon's role to spawn the bullet, but once the bullet is spawned, it is the SmallBullet script's role to control it
+                GameObject mysmallbullet = Instantiate(smallbullet, CannonTip.position, Quaternion.identity);
+                //so setting the velocity should be moved to the SmallBullet script
+                //mysmallbullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 4f);
+            }
+            else if (button == "Fire2")
+            {
+                GameObject mylargebullet = Instantiate(largebullet, CannonTip.position, Quaternion.identity);
+            }
+
+            yield return new WaitForSeconds(1f);
         }
     }
 }

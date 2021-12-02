@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner _spawnerInstance;
+
     [SerializeField] List<GameObject> EnemyList;
     int randomEnemy;
     float randomXPos;
+
+    private void Awake()
+    {
+        if (_spawnerInstance == null)
+        {
+            _spawnerInstance = this;
+        }
+        else if(_spawnerInstance != null)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
