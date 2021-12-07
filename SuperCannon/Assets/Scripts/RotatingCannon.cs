@@ -8,7 +8,8 @@ public class RotatingCannon : MonoBehaviour
     GameObject smallbullet;
     GameObject largebullet;
 
-    Coroutine myCoroutine;
+    Coroutine fire1coroutine;
+    Coroutine fire2coroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -44,24 +45,24 @@ public class RotatingCannon : MonoBehaviour
             //Coroutine is an IEnumerator object
             //A NEW IEnumerator object is generated EVERY TIME a coroutine is started
             //With every button press, a NEW IEnumerator is stored in coroutineFire#
-            //if RepeatFire("") is stored once before if statements, the SAME IEnumerator is kept and
+            //Otherwise, if RepeatFire("") is stored once before if statements, the SAME IEnumerator is kept and
             //StopCoroutine() will try to stop an OLD IEnumerator object
-            myCoroutine = StartCoroutine(RepeatFire("Fire1"));
+            fire1coroutine = StartCoroutine(RepeatFire("Fire1"));
+        }
+
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(fire1coroutine);
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            myCoroutine = StartCoroutine(RepeatFire("Fire2"));
+            fire2coroutine = StartCoroutine(RepeatFire("Fire2"));
         }
 
-        if (Input.GetButtonUp("Fire1"))
+        else if (Input.GetButtonUp("Fire2"))
         {
-            StopCoroutine(myCoroutine);
-        }
-
-        if (Input.GetButtonUp("Fire2"))
-        {
-            StopCoroutine(myCoroutine);
+            StopCoroutine(fire2coroutine);
         }
     }
 

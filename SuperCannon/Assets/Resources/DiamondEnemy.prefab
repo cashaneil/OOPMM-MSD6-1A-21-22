@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3510860127229450121}
   - component: {fileID: -5473943653497710713}
   - component: {fileID: 6968581142384469492}
+  - component: {fileID: -4158708860983986278}
   m_Layer: 0
   m_Name: DiamondEnemy
   m_TagString: Untagged
@@ -93,7 +94,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9153167987837929081}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -149,5 +150,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b23285e5e45ab5488b61c59a2be9bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starthealth: 3
+--- !u!114 &-4158708860983986278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153167987837929081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5935dfd270d2e4e82a099a4710e7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
