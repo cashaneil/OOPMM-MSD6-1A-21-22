@@ -4,27 +4,52 @@ using UnityEngine;
 
 public class GunRotate : MonoBehaviour
 {
+    //to be able to attach the GunTip game object's transform.position in it
+    Transform GunTip;
+    //Blast1 prefab
+    GameObject Blast1;
+
+    Coroutine blastCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        GunTip = this.gameObject.transform.GetChild(0);
+
+        Blast1 = Resources.Load("L1Blast") as GameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //calculating mouse pos RELATIVE to the cannon pos (ie. the difference in dist between them) by substracting cannon pos by mouse pos
+        //calculating mouse pos RELATIVE to the gun pos by substracting gun pos by mouse pos
         Vector3 mouselook = this.transform.position - GameData.MousePos;
 
-        //Since Unity is actually 3D based, if we want an object to rotate in 2D, it needs to rotate AROUND the Z axis, which in Unity is Vector3.forward
-        //newrotation specifies new rotation coordinated for the cannon to be set to
-        //LookRotation first takes the rotation coordinates to rotate to (mouselook), then around what axis does it rotate to does coordinates
         Quaternion newrotation = Quaternion.LookRotation(mouselook, Vector3.forward);
-        newrotation.x = 0f; //reset back any x rotation to 0f since we only want to rotate around the z axis
-        newrotation.y = 0f; //reset back any y rotation to 0f since we only want to rotate around the z axis
+        newrotation.x = 0f; //reset back any x rotation to 0f
+        newrotation.y = 0f; //reset back any y rotation to 0f
 
-        //this.transform.rotation = newrotation; //no slerp
+        //rotate gun and add slerp
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, newrotation, Time.deltaTime * 8);
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, newrotation, Time.deltaTime * 6);
+        if (Input.GetButtonDown("Fire1"))
+        {
+            blastCoroutine = StartCoroutine(repeatBlast());
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(blastCoroutine);
+        }
+    }
+
+    IEnumerator repeatBlast()
+    {
+        while (true)
+        {
+            Instantiate(Blast1, GunTip.position, Quaternion.identity);
+
+            yield return new WaitForSeconds(0.5f);
+
+        }
     }
 }
