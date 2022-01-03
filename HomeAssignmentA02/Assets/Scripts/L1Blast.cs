@@ -7,7 +7,7 @@ public class L1Blast : Blast
     // Start is called before the first frame update
     protected override void Start()
     {
-        speed = 7f;
+        speed = 6f;
         base.Start();
     }
 

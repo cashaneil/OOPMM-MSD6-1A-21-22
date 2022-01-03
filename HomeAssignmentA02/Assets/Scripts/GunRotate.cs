@@ -8,7 +8,6 @@ public class GunRotate : MonoBehaviour
     Transform GunTip;
     //Blast1 prefab
     GameObject Blast1;
-
     Coroutine blastCoroutine;
 
     // Start is called before the first frame update
@@ -47,9 +46,7 @@ public class GunRotate : MonoBehaviour
         while (true)
         {
             Instantiate(Blast1, GunTip.position, Quaternion.identity);
-
             yield return new WaitForSeconds(0.5f);
-
         }
     }
 }

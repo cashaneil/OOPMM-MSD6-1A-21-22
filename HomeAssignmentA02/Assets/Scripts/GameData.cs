@@ -6,6 +6,13 @@ public abstract class GameData : MonoBehaviour
 {
     static Camera gameCamera = Camera.main;
 
+    private static int _score = 0;
+    public static int Score
+    {
+        set { _score = value; }
+        get { return _score; }
+    }
+
     //specifying real world coordinate values corresponding to camera coordinates through methods
     public static float XMin
     {
