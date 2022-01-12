@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    EnemyTakeDamage damageable;
+    ITakeDamage enemyDamageable;
     [SerializeField] int startingHealth;
-    
+
+    //player prefab
+    GameObject playerPrefab;
+    //Blast1 prefab
+    GameObject Blast1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +19,14 @@ public class Enemy : MonoBehaviour
         Vector2 enemyVelocity = new Vector2(Random.Range(-2.0f, -7.0f), 0f);
         this.GetComponent<Rigidbody2D>().velocity = enemyVelocity;
 
-        damageable = GetComponent<EnemyTakeDamage>();
-        damageable.health = startingHealth;
+        enemyDamageable = GetComponent<ITakeDamage>();
+        enemyDamageable.health = startingHealth;
+
+        Blast1 = Resources.Load("L1Blast") as GameObject;
+
+        playerPrefab = GameObject.FindGameObjectWithTag("Player");
+
+        blastToPlayer();
     }
 
     // Update is called once per frame
@@ -34,7 +45,18 @@ public class Enemy : MonoBehaviour
         if (mycollider.gameObject.tag == "Blast")
         {
             Destroy(mycollider.gameObject);
-            damageable.TakeDamage(2);
+            enemyDamageable.TakeDamage(5);
         }
+    }
+
+    //fire a blast towards the player
+    void blastToPlayer()
+    {
+        Vector3 enemyTip = new Vector3(transform.position.x, transform.position.y - 1f);
+        GameObject spawnedBlast = Instantiate(Blast1, enemyTip, Quaternion.identity);
+        //blast must be given a direction velocity
+        //in this case it is from the enemy to the player position
+        //run BlastToTarget with parameter of player pos
+        spawnedBlast.SendMessage("BlastToTarget", playerPrefab.transform.position);
     }
 }

@@ -11,19 +11,7 @@ public class Blast : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        Vector3 mousepos = GameData.MousePos;
-
-        //determine velocity based on mouse position
-        direction = mousepos - this.transform.position;
-        direction.Normalize();
-        Vector2 newvelocity = direction * speed;
-        this.GetComponent<Rigidbody2D>().velocity = newvelocity;
-
-        Quaternion blastrotation = Quaternion.LookRotation((this.transform.position - mousepos), Vector3.forward);
-        blastrotation.x = 0f;
-        blastrotation.y = 0f;
-
-        this.transform.rotation = blastrotation;
+        
     }
 
     // Update is called once per frame
@@ -38,5 +26,20 @@ public class Blast : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void BlastToTarget(Vector3 targetPos)
+    {
+        //determine velocity based on mouse position
+        direction = targetPos - this.transform.position;
+        direction.Normalize();
+        Vector2 newvelocity = direction * speed;
+        this.GetComponent<Rigidbody2D>().velocity = newvelocity;
+
+        Quaternion blastrotation = Quaternion.LookRotation((this.transform.position - targetPos), Vector3.forward);
+        blastrotation.x = 0f;
+        blastrotation.y = 0f;
+
+        this.transform.rotation = blastrotation;
     }
 }

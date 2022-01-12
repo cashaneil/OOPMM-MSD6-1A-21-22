@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            randomYPos = Random.Range(GameData.YMin+2f, GameData.YMax-2f);
+            randomYPos = Random.Range(GameData.YMin+4f, GameData.YMax-2f);
             Instantiate(EnemyList[0], new Vector3(this.transform.position.x, randomYPos), Quaternion.identity);
 
             yield return new WaitForSeconds(2.5f);

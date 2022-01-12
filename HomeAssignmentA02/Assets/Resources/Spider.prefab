@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 7717661768012049788}
   - component: {fileID: 4755787270973700950}
   - component: {fileID: -7648226456008205799}
-  - component: {fileID: -999929039670788776}
+  - component: {fileID: -2674937659464787383}
   m_Layer: 0
   m_Name: Spider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a4b46f289c41540b514418c42bd47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
---- !u!114 &-999929039670788776
+  startingHealth: 20
+--- !u!114 &-2674937659464787383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,6 +167,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3910488286822257311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcadfd96439c3a54194f0e9a299673c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ead35ba27343524cadccc10e92239d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

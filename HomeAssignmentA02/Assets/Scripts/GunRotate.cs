@@ -45,7 +45,11 @@ public class GunRotate : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(Blast1, GunTip.position, Quaternion.identity);
+            GameObject spawnedBlast = Instantiate(Blast1, GunTip.position, Quaternion.identity);
+            //blast must be given a direction velocity
+            //in this case it is from the player to the mouse position
+            //run BlastToTarget with parameter of mouse pos
+            spawnedBlast.SendMessage("BlastToTarget", GameData.MousePos);
             yield return new WaitForSeconds(0.5f);
         }
     }

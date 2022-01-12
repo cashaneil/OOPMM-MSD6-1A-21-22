@@ -5,13 +5,18 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] public float speed;
-
     private Rigidbody2D body;
+
+    ITakeDamage playerDamageable;
+    public int startingHealth;
     
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+
+        playerDamageable = GetComponent<ITakeDamage>();
+        playerDamageable.health = startingHealth;
     }
 
     // Update is called once per frame
@@ -47,6 +52,15 @@ public class PlayerMove : MonoBehaviour
         else
         {
             return 0f;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D mycollider)
+    {
+        if (mycollider.gameObject.tag == "Blast")
+        {
+            Destroy(mycollider.gameObject);
+            playerDamageable.TakeDamage(10);
         }
     }
 }

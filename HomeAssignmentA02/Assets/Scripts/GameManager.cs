@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface EnemyTakeDamage
+public interface ITakeDamage
 {
     int health { get; set; }
 
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager _instance;
     //added using UnityEngine.UI to recognise type Text
     Text scoreText;
+    Text healthText;
+    GameObject healthBar;
 
     //to create instance of class at start before everything else
     //to ensure that only that 1 instance is kept and others are removed
@@ -29,6 +31,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        //Don't destroy on load of scene
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -37,6 +42,9 @@ public class GameManager : MonoBehaviour
         //update UI score text with game data score at start
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         scoreText.text = "Score: " + GameData.Score.ToString();
+
+        healthText = GameObject.Find("HealthText").GetComponent<Text>();
+        healthBar = GameObject.Find("PlayerHealthBar");
     }
 
     // Update is called once per frame
@@ -49,5 +57,13 @@ public class GameManager : MonoBehaviour
     {
         GameData.Score += ScoreValue;
         scoreText.text = "Score: " + GameData.Score.ToString();
+    }
+
+    public void UpdateHealthText(int newHealthValue)
+    {
+        healthText.text = newHealthValue.ToString();
+        Vector3 barLength = new Vector3((newHealthValue * 4f) / 100, 0.6f, 1f);
+        Debug.Log("Bar length: " + barLength.ToString());
+        healthBar.transform.localScale = barLength;
     }
 }
