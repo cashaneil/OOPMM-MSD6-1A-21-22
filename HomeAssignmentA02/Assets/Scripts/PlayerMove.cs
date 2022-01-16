@@ -60,7 +60,19 @@ public class PlayerMove : MonoBehaviour
         if (mycollider.gameObject.tag == "Blast")
         {
             Destroy(mycollider.gameObject);
-            playerDamageable.TakeDamage(10);
+
+            if (GameData.CurrentLevel == 1)
+            {
+                playerDamageable.TakeDamage(5);
+            }
+            else if (GameData.CurrentLevel == 2)
+            {
+                playerDamageable.TakeDamage(5);
+            }
+            else if (GameData.CurrentLevel == 3)
+            {
+                playerDamageable.TakeDamage(5);
+            }
         }
     }
 }

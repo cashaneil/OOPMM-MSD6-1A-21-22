@@ -8,23 +8,35 @@ public class CharTakeDamage : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int DamageAmount)
     {
-        health = health - DamageAmount;
+        health -= DamageAmount;
         if (gameObject.tag == "Player")
         {
             GameManager._instance.UpdateHealthText(health);
         }
-        Debug.Log(gameObject.tag + "'s new health is: " + health);
+        
         if (health <= 0)
         {
             //if player is taking damage
             if (gameObject.tag == "Player")
             {
+                GameManager._instance.OnPlayerDie();
                 Destroy(this.gameObject);
             }
             //if enemy is taking damage
             else if (gameObject.tag == "Enemy")
             {
-                GameManager._instance.IncreaseScore(25);
+                if (GameData.CurrentLevel == 1)
+                {
+                    GameManager._instance.IncreaseScoreandKills(25);
+                }
+                else if (GameData.CurrentLevel == 2)
+                {
+                    GameManager._instance.IncreaseScoreandKills(50);
+                }
+                else if (GameData.CurrentLevel == 3)
+                {
+                    GameManager._instance.IncreaseScoreandKills(100);
+                }
                 Destroy(this.gameObject);
             }
         }

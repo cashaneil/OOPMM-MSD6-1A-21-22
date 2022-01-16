@@ -1,0 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class SerializedData
+{
+    public int ser_score;
+    public int ser_highScore;
+    public int ser_kills;
+    public int ser_currentLevel;
+}

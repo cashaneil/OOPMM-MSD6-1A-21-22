@@ -8,6 +8,8 @@ public class GunRotate : MonoBehaviour
     Transform GunTip;
     //Blast1 prefab
     GameObject Blast1;
+    GameObject Blast2;
+    GameObject Blast3;
     Coroutine blastCoroutine;
 
     // Start is called before the first frame update
@@ -16,6 +18,8 @@ public class GunRotate : MonoBehaviour
         GunTip = this.gameObject.transform.GetChild(0);
 
         Blast1 = Resources.Load("L1Blast") as GameObject;
+        Blast2 = Resources.Load("L2Blast") as GameObject;
+        Blast3 = Resources.Load("L3Blast") as GameObject;
     }
 
     // Update is called once per frame
@@ -43,14 +47,29 @@ public class GunRotate : MonoBehaviour
 
     IEnumerator repeatBlast()
     {
+        //level 1 values
+        GameObject blastToSpawn = Blast1;
+        float waitTime = 0.5f;
+
+        if (GameData.CurrentLevel == 2)
+        {
+            blastToSpawn = Blast2;
+            waitTime = 0.3f;
+        }
+        else if (GameData.CurrentLevel == 3)
+        {
+            blastToSpawn = Blast3;
+            waitTime = 0.1f;
+        }
+
         while (true)
         {
-            GameObject spawnedBlast = Instantiate(Blast1, GunTip.position, Quaternion.identity);
+            GameObject spawnedBlast = Instantiate(blastToSpawn, GunTip.position, Quaternion.identity);
             //blast must be given a direction velocity
             //in this case it is from the player to the mouse position
             //run BlastToTarget with parameter of mouse pos
             spawnedBlast.SendMessage("BlastToTarget", GameData.MousePos);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 }

@@ -26,6 +26,11 @@ public class Blast : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (mycollider.gameObject.tag == "Blast")  //if blast collides with another blast (ex. player/enemy blast), destroy the opposing blast and itself
+        {
+            Destroy(mycollider.gameObject);
+            Destroy(gameObject);
+        }
     }
 
     protected virtual void BlastToTarget(Vector3 targetPos)

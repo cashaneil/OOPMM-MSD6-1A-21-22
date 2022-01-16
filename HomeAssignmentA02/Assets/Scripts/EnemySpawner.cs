@@ -36,12 +36,26 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator EnemySpawnerCoroutine()
     {
+        float waitTime = 2.5f; //default value
+        if (GameData.CurrentLevel == 1)
+        {
+            waitTime = 2.5f;
+        }
+        else if (GameData.CurrentLevel == 2)
+        {
+            waitTime = 2f;
+        }
+        else if (GameData.CurrentLevel == 3)
+        {
+            waitTime = 1f;
+        }
+
         while (true)
         {
             randomYPos = Random.Range(GameData.YMin+4f, GameData.YMax-2f);
             Instantiate(EnemyList[0], new Vector3(this.transform.position.x, randomYPos), Quaternion.identity);
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 }

@@ -29,12 +29,6 @@ public class Enemy : MonoBehaviour
         blastToPlayer();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerEnter2D(Collider2D mycollider)
     {
         if (mycollider.gameObject.tag == "Destroyer") //if enemy collides with EnemyDestroyer, destroy it
@@ -45,7 +39,19 @@ public class Enemy : MonoBehaviour
         if (mycollider.gameObject.tag == "Blast")
         {
             Destroy(mycollider.gameObject);
-            enemyDamageable.TakeDamage(5);
+
+            if (GameData.CurrentLevel == 1)
+            {
+                enemyDamageable.TakeDamage(5);
+            }
+            else if (GameData.CurrentLevel == 2)
+            {
+                enemyDamageable.TakeDamage(7);
+            }
+            else if (GameData.CurrentLevel == 3)
+            {
+                enemyDamageable.TakeDamage(9);
+            }
         }
     }
 
