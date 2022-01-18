@@ -6,20 +6,13 @@ public class GunRotate : MonoBehaviour
 {
     //to be able to attach the GunTip game object's transform.position in it
     Transform GunTip;
-    //Blast1 prefab
-    GameObject Blast1;
-    GameObject Blast2;
-    GameObject Blast3;
+    [SerializeField] List<GameObject> BlastList;
     Coroutine blastCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
         GunTip = this.gameObject.transform.GetChild(0);
-
-        Blast1 = Resources.Load("L1Blast") as GameObject;
-        Blast2 = Resources.Load("L2Blast") as GameObject;
-        Blast3 = Resources.Load("L3Blast") as GameObject;
     }
 
     // Update is called once per frame
@@ -48,23 +41,23 @@ public class GunRotate : MonoBehaviour
     IEnumerator repeatBlast()
     {
         //level 1 values
-        GameObject blastToSpawn = Blast1;
+        int blastToSpawn = 0;
         float waitTime = 0.5f;
 
-        if (GameData.CurrentLevel == 2)
+        switch (GameData.CurrentLevel)
         {
-            blastToSpawn = Blast2;
-            waitTime = 0.3f;
-        }
-        else if (GameData.CurrentLevel == 3)
-        {
-            blastToSpawn = Blast3;
-            waitTime = 0.1f;
+            case GameData._currentLevel.Level2:
+                blastToSpawn = 1;
+                break;
+
+            case GameData._currentLevel.Level3:
+                blastToSpawn = 2;
+                break;
         }
 
         while (true)
         {
-            GameObject spawnedBlast = Instantiate(blastToSpawn, GunTip.position, Quaternion.identity);
+            GameObject spawnedBlast = Instantiate(BlastList[blastToSpawn], GunTip.position, Quaternion.identity);
             //blast must be given a direction velocity
             //in this case it is from the player to the mouse position
             //run BlastToTarget with parameter of mouse pos

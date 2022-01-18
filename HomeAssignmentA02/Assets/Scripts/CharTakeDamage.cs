@@ -25,18 +25,21 @@ public class CharTakeDamage : MonoBehaviour, ITakeDamage
             //if enemy is taking damage
             else if (gameObject.tag == "Enemy")
             {
-                if (GameData.CurrentLevel == 1)
+                switch (GameData.CurrentLevel)
                 {
-                    GameManager._instance.IncreaseScoreandKills(25);
+                    case GameData._currentLevel.Level1:
+                        GameManager._instance.IncreaseScoreandKills(25);
+                        break;
+
+                    case GameData._currentLevel.Level2:
+                        GameManager._instance.IncreaseScoreandKills(50);
+                        break;
+
+                    case GameData._currentLevel.Level3:
+                        GameManager._instance.IncreaseScoreandKills(100);
+                        break;
                 }
-                else if (GameData.CurrentLevel == 2)
-                {
-                    GameManager._instance.IncreaseScoreandKills(50);
-                }
-                else if (GameData.CurrentLevel == 3)
-                {
-                    GameManager._instance.IncreaseScoreandKills(100);
-                }
+
                 Destroy(this.gameObject);
             }
         }

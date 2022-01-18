@@ -61,18 +61,31 @@ public class PlayerMove : MonoBehaviour
         {
             Destroy(mycollider.gameObject);
 
-            if (GameData.CurrentLevel == 1)
+            switch (GameData.CurrentLevel)
             {
-                playerDamageable.TakeDamage(5);
+                case GameData._currentLevel.Level1:
+                    playerDamageable.TakeDamage(5);
+                    break;
+                case GameData._currentLevel.Level2:
+                    playerDamageable.TakeDamage(10);
+                    break;
+                case GameData._currentLevel.Level3:
+                    playerDamageable.TakeDamage(15);
+                    break;
             }
-            else if (GameData.CurrentLevel == 2)
-            {
-                playerDamageable.TakeDamage(5);
-            }
-            else if (GameData.CurrentLevel == 3)
-            {
-                playerDamageable.TakeDamage(5);
-            }
+
+            //if (GameData.CurrentLevel == 1)
+            //{
+            //    playerDamageable.TakeDamage(5);
+            //}
+            //else if (GameData.CurrentLevel == 2)
+            //{
+            //    playerDamageable.TakeDamage(10);
+            //}
+            //else if (GameData.CurrentLevel == 3)
+            //{
+            //    playerDamageable.TakeDamage(15);
+            //}
         }
     }
 }

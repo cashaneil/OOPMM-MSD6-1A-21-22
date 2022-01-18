@@ -35,22 +35,22 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        //Don't destroy on load of scene
         DontDestroyOnLoad(this.gameObject);
+
         //When scene has loaded add functionality of OnSceneLoaded()
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        //loading data
+        GameData.Score = 0;
+        GameData.HighScore = 0;
+        GameData.Kills = 0;
+        GameData.CurrentLevel = GameData._currentLevel.Level1;
+        GetComponent<SaveLoadManager>().LoadData();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //loading data
-        GameData.Score = 0;
-        GameData.HighScore = 0;
-        GameData.Kills = 0;
-        GameData.CurrentLevel = 1;
-        GetComponent<SaveLoadManager>().LoadData();
-        
         //update UI score text with game data score at start
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         killsText = GameObject.Find("KillsText").GetComponent<Text>();
@@ -64,7 +64,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+        }
     }
 
     public void IncreaseScoreandKills(int ScoreValue)
@@ -76,6 +79,20 @@ public class GameManager : MonoBehaviour
         killsText.text = "Kills: " + GameData.Kills.ToString();
 
         GetComponent<SaveLoadManager>().SaveData();
+
+        //load next level if score conditions are met
+        if (GameData.Score >= 250 && SceneManager.GetActiveScene().name == "Level1")
+        {
+            NextLevel();
+        }
+        else if (GameData.Score >= 450 && SceneManager.GetActiveScene().name == "Level2")
+        {
+            NextLevel();
+        }
+        else if (GameData.Score >= 650 && SceneManager.GetActiveScene().name == "Level3")
+        {
+            NextLevel();
+        }
     }
 
     public void UpdateHealthText(int newHealthValue)
@@ -93,23 +110,50 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        GetComponent<SaveLoadManager>().SaveData();
+        switch (GameData.CurrentLevel)
+        {
+            //check CURRENT level to determine whether to iterate to next level or go to win scene
+            case GameData._currentLevel.Level1:
+                GameData.CurrentLevel++;
+                Debug.Log(GameData.CurrentLevel.ToString());
+                GetComponent<SaveLoadManager>().SaveData(); //save data before loading scene
+                SceneManager.LoadScene(GameData.CurrentLevel.ToString());
+                break;
 
-        if (GameData.CurrentLevel < 3)
-        {
-            GameData.CurrentLevel++;
-            SceneManager.LoadScene("Level" + GameData.CurrentLevel.ToString());
-        }
-        else if (GameData.CurrentLevel == 3)
-        {
-            SceneManager.LoadScene("Win");
+            case GameData._currentLevel.Level2:
+                GameData.CurrentLevel++;
+                GetComponent<SaveLoadManager>().SaveData();
+                SceneManager.LoadScene(GameData.CurrentLevel.ToString());
+                break;
+
+            case GameData._currentLevel.Level3:
+                GetComponent<SaveLoadManager>().SaveData();
+                SceneManager.LoadScene("Win");
+                break;
         }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "Level1" || scene.name == "Level2" || scene.name == "Level3")
+        {
+            //save data till this point
+            GetComponent<SaveLoadManager>().SaveData();
+
+            //update UI score text with game data score on scene load as well
+            scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+            killsText = GameObject.Find("KillsText").GetComponent<Text>();
+            scoreText.text = "Score: " + GameData.Score.ToString();
+            killsText.text = "Kills: " + GameData.Kills.ToString();
+
+            healthText = GameObject.Find("HealthText").GetComponent<Text>();
+            healthBar = GameObject.Find("PlayerHealthBar").transform;
+        }
+
         if (scene.name == "Win" || scene.name == "GameOver")
         {
+            GetComponent<SaveLoadManager>().SaveData();
+
             Text sceneScoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             Text sceneKillsText = GameObject.Find("KillsText").GetComponent<Text>();
             Text sceneHighScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
@@ -141,11 +185,22 @@ public class GameManager : MonoBehaviour
                 sceneMessageText.text = "Better luck next time!";
             }
 
-            //resetting game score
+            //resetting game data
             GameData.Score = 0;
             GameData.Kills = 0;
-            GameData.CurrentLevel = 1;
+            GameData.CurrentLevel = GameData._currentLevel.Level1;
             GetComponent<SaveLoadManager>().SaveData();
         }
+    }
+
+    //for testing
+    void QuitGame()
+    {
+        GameData.Score = 0;
+        GameData.Kills = 0;
+        GameData.CurrentLevel = GameData._currentLevel.Level1;
+        GetComponent<SaveLoadManager>().SaveData();
+
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }

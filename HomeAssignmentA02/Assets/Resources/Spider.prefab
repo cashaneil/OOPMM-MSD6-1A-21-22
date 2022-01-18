@@ -158,6 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 20
+  BlastList:
+  - {fileID: 6611106535995736830, guid: 883877cc881d8bd4e8be8fa8c5f71eb5, type: 3}
+  - {fileID: 6611106535995736830, guid: f687edd737793cb41b7ae5c3e6a1e201, type: 3}
+  - {fileID: 6611106535995736830, guid: 244fd5d131ce2734f8529fd63742e212, type: 3}
 --- !u!114 &-2674937659464787383
 MonoBehaviour:
   m_ObjectHideFlags: 0

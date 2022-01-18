@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8487273282983238640}
   - component: {fileID: 7646360023042695361}
   - component: {fileID: -7853324459487453356}
+  - component: {fileID: -2861422077336363829}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -150,3 +151,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 30
+  BlastList:
+  - {fileID: 6611106535995736830, guid: 883877cc881d8bd4e8be8fa8c5f71eb5, type: 3}
+  - {fileID: 6611106535995736830, guid: f687edd737793cb41b7ae5c3e6a1e201, type: 3}
+  - {fileID: 6611106535995736830, guid: 244fd5d131ce2734f8529fd63742e212, type: 3}
+--- !u!114 &-2861422077336363829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058151070570985869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ead35ba27343524cadccc10e92239d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

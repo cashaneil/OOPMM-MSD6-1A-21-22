@@ -8,18 +8,6 @@ public class Blast : MonoBehaviour
 
     private Vector2 direction;
 
-    // Start is called before the first frame update
-    protected virtual void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-
-    }
-
     protected virtual void OnTriggerEnter2D(Collider2D mycollider)
     {
         if (mycollider.gameObject.name == "Main Camera")  //if blast collides with Main Camera, destroy it

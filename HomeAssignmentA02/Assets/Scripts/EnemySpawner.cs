@@ -28,32 +28,29 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(EnemySpawnerCoroutine());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator EnemySpawnerCoroutine()
     {
-        float waitTime = 2.5f; //default value
-        if (GameData.CurrentLevel == 1)
+        //default value
+        int enemyToSpawn = 0;
+        float waitTime = 2.5f;
+
+        switch (GameData.CurrentLevel)
         {
-            waitTime = 2.5f;
-        }
-        else if (GameData.CurrentLevel == 2)
-        {
-            waitTime = 2f;
-        }
-        else if (GameData.CurrentLevel == 3)
-        {
-            waitTime = 1f;
+            case GameData._currentLevel.Level2:
+                waitTime = 2f;
+                enemyToSpawn = 1;
+                break;
+
+            case GameData._currentLevel.Level3:
+                waitTime = 1.5f;
+                enemyToSpawn = 2;
+                break;
         }
 
         while (true)
         {
             randomYPos = Random.Range(GameData.YMin+4f, GameData.YMax-2f);
-            Instantiate(EnemyList[0], new Vector3(this.transform.position.x, randomYPos), Quaternion.identity);
+            Instantiate(EnemyList[enemyToSpawn], new Vector3(this.transform.position.x, randomYPos), Quaternion.identity);
 
             yield return new WaitForSeconds(waitTime);
         }

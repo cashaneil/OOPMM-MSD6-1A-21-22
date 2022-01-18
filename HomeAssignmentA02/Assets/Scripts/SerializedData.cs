@@ -8,5 +8,5 @@ public class SerializedData
     public int ser_score;
     public int ser_highScore;
     public int ser_kills;
-    public int ser_currentLevel;
+    public GameData._currentLevel ser_currentLevel;
 }
