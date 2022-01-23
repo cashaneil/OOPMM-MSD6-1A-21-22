@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //update UI score text with game data score at start
+        //update UI with game data at start
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         killsText = GameObject.Find("KillsText").GetComponent<Text>();
         scoreText.text = "Score: " + GameData.Score.ToString();
@@ -59,15 +59,6 @@ public class GameManager : MonoBehaviour
 
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
         healthBar = GameObject.Find("PlayerHealthBar").transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            QuitGame();
-        }
     }
 
     public void IncreaseScoreandKills(int ScoreValue)
@@ -85,13 +76,23 @@ public class GameManager : MonoBehaviour
         {
             NextLevel();
         }
-        else if (GameData.Score >= 450 && SceneManager.GetActiveScene().name == "Level2")
+        else if (GameData.Score >= 550 && SceneManager.GetActiveScene().name == "Level2")
         {
             NextLevel();
         }
-        else if (GameData.Score >= 650 && SceneManager.GetActiveScene().name == "Level3")
+        else if (GameData.HighScore == 0) //if user is playing for the first time, then hScore will be 0, so the game should check if the score is higher than the default score limit
         {
-            NextLevel();
+            if (GameData.Score >= 950 && SceneManager.GetActiveScene().name == "Level3")
+            {
+                NextLevel();
+            }
+        }
+        else if (GameData.HighScore != 0) //if user is not playing for the first time, then hScore would not be 0, so the game should check if the score is higher than the current high score
+        {
+            if (GameData.Score > GameData.HighScore && SceneManager.GetActiveScene().name == "Level3")
+            {
+                NextLevel();
+            }
         }
     }
 
@@ -108,14 +109,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
-    public void NextLevel()
+    void NextLevel()
     {
         switch (GameData.CurrentLevel)
         {
             //check CURRENT level to determine whether to iterate to next level or go to win scene
             case GameData._currentLevel.Level1:
                 GameData.CurrentLevel++;
-                Debug.Log(GameData.CurrentLevel.ToString());
                 GetComponent<SaveLoadManager>().SaveData(); //save data before loading scene
                 SceneManager.LoadScene(GameData.CurrentLevel.ToString());
                 break;
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
             //save data till this point
             GetComponent<SaveLoadManager>().SaveData();
 
-            //update UI score text with game data score on scene load as well
+            //update UI with game data on scene load as well
             scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             killsText = GameObject.Find("KillsText").GetComponent<Text>();
             scoreText.text = "Score: " + GameData.Score.ToString();
@@ -157,7 +157,9 @@ public class GameManager : MonoBehaviour
             Text sceneScoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             Text sceneKillsText = GameObject.Find("KillsText").GetComponent<Text>();
             Text sceneHighScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
-            Text sceneMessageText = GameObject.Find("MessageText").GetComponent<Text>();
+
+            Button goToStart = GameObject.Find("GoToStart").GetComponent<Button>();
+            goToStart.onClick.AddListener(GoToStart);
 
             sceneScoreText.text = "Score: " + GameData.Score;
             sceneKillsText.text = "Kills: " + GameData.Kills;
@@ -172,19 +174,6 @@ public class GameManager : MonoBehaviour
                 sceneHighScoreText.text = "High Score is still at " + GameData.HighScore + ". Think you can beat it again?";
             }
 
-            if (GameData.Score >= 3000 && scene.name == "Win")
-            {
-                sceneMessageText.text = "You're a natural shooter!";
-            }
-            else if (GameData.Score < 3000 && scene.name == "Win")
-            {
-                sceneMessageText.text = "Great Job!";
-            }
-            else
-            {
-                sceneMessageText.text = "Better luck next time!";
-            }
-
             //resetting game data
             GameData.Score = 0;
             GameData.Kills = 0;
@@ -193,14 +182,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //for testing
-    void QuitGame()
+    void GoToStart()
     {
-        GameData.Score = 0;
-        GameData.Kills = 0;
-        GameData.CurrentLevel = GameData._currentLevel.Level1;
-        GetComponent<SaveLoadManager>().SaveData();
-
-        UnityEditor.EditorApplication.isPlaying = false;
+        SceneManager.LoadScene("Start");
     }
 }

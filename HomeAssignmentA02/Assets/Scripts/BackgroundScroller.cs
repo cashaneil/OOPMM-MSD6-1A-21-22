@@ -24,19 +24,6 @@ public class BackgroundScroller : MonoBehaviour
                 scrollOffset = new Vector3(-46.8f, startPosition.y, startPosition.z);
                 break;
         }
-
-        //if (GameData.CurrentLevel == 1)
-        //{
-        //    scrollOffset = new Vector3(-36.0f, startPosition.y, startPosition.z);
-        //}
-        //else if (GameData.CurrentLevel == 2)
-        //{
-        //    scrollOffset = new Vector3(-36.0f, startPosition.y, startPosition.z);
-        //}
-        //else if (GameData.CurrentLevel == 3)
-        //{
-        //    scrollOffset = new Vector3(-46.8f, startPosition.y, startPosition.z);
-        //}
     }
 
     void FixedUpdate()

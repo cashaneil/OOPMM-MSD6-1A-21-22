@@ -73,19 +73,6 @@ public class PlayerMove : MonoBehaviour
                     playerDamageable.TakeDamage(15);
                     break;
             }
-
-            //if (GameData.CurrentLevel == 1)
-            //{
-            //    playerDamageable.TakeDamage(5);
-            //}
-            //else if (GameData.CurrentLevel == 2)
-            //{
-            //    playerDamageable.TakeDamage(10);
-            //}
-            //else if (GameData.CurrentLevel == 3)
-            //{
-            //    playerDamageable.TakeDamage(15);
-            //}
         }
     }
 }
